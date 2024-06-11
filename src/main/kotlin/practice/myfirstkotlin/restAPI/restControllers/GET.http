@@ -1,0 +1,3 @@
+### GET request to example server
+GET http://localhost:8080/tables
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxNTk4NTQyNiwiZXhwIjoxNzE2MDIxNDI2fQ.CutqIpPtI21n6hIWOC-_C22P8elZkIKvQ1X2UREVhvn_wfV9N7zJZBVX6y-x9nW9
