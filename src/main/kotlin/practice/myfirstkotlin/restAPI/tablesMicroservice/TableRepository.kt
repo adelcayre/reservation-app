@@ -1,8 +1,7 @@
-package practice.myfirstkotlin.restAPI.repositories
+package practice.myfirstkotlin.restAPI.tablesMicroservice
 
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
-import practice.myfirstkotlin.restAPI.entities.Tables
 
 @Repository
 interface TablesRepository : JpaRepository<Tables,Long> {

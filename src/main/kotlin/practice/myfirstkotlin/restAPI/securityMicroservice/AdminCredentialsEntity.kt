@@ -1,4 +1,4 @@
-package practice.myfirstkotlin.restAPI.entities
+package practice.myfirstkotlin.restAPI.securityMicroservice
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
 import jakarta.persistence.Table

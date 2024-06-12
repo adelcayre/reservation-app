@@ -1,7 +1,6 @@
-package practice.myfirstkotlin.restAPI.services
+package practice.myfirstkotlin.restAPI.securityMicroservice
 
 import org.springframework.stereotype.Service
-import practice.myfirstkotlin.restAPI.repositories.AdminCredentialsRepository
 
 @Service
 class SecurityService(private val adminCredentialsRepository: AdminCredentialsRepository) {

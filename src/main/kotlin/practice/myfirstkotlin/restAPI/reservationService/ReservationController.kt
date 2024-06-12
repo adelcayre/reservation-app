@@ -1,28 +1,22 @@
-package practice.myfirstkotlin.restAPI.restControllers
+package practice.myfirstkotlin.restAPI.reservationService
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.util.Optional
-import practice.myfirstkotlin.restAPI.entities.Reservation
-import practice.myfirstkotlin.restAPI.entities.ScenarioInitializer
-import practice.myfirstkotlin.restAPI.services.ReservationService
+import practice.myfirstkotlin.restAPI.ScenarioInitializer
 
 
 @RestController
-class ReservationController(private val reservationService: ReservationService,
-                            private val tablesInitializer: ScenarioInitializer
-) {
-    init {
-        tablesInitializer.initializeTables()
-    }
+class ReservationController(private val reservationService: ReservationService) {
+
 
     //send request to reserve a table
     @PostMapping("/reserve")
-    fun reserve(@RequestBody reservation: Reservation): ResponseEntity<String> {
-        val confirmation=reservationService.tryReservation(reservation)
+    fun reserve(@RequestBody reservationEntity: ReservationEntity): ResponseEntity<String> {
+        val confirmation=reservationService.tryReservation(reservationEntity)
         return when{
-            //200 table was available and reservation id is sent back in response body
+            //200 table was available and reservationEntity id is sent back in response body
             confirmation!=-1L -> ResponseEntity.ok("confirmed:$confirmation")
             //422 no table available for requested party size
             else -> ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("No table available")
@@ -41,8 +35,8 @@ class ReservationController(private val reservationService: ReservationService,
 
     @PutMapping("/reserve")
     fun editReservation( @RequestParam name: String,@RequestParam resId: Long,
-        @RequestBody reservationUpdate: Reservation): ResponseEntity<String>{
-        val confirmation= reservationService.updateReservation(name,resId,reservationUpdate)
+        @RequestBody reservationEntityUpdate: ReservationEntity): ResponseEntity<String>{
+        val confirmation= reservationService.updateReservation(name,resId,reservationEntityUpdate)
         return when{
             //422 no table available for requested party size
             confirmation==-1L -> ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("No table available")
@@ -60,14 +54,14 @@ class ReservationController(private val reservationService: ReservationService,
     @GetMapping("/reservations/{id}")
     fun checkReservation(@PathVariable id : Long): ResponseEntity<Any>{
         //reserve service call
-        val reservation: Optional<Reservation> = reservationService.findReservation(id)
+        val reservationEntity: Optional<ReservationEntity> = reservationService.findReservation(id)
         //200 reservation update accommodated and saved, sent back in response body
-        return if(reservation.isPresent){
-            ResponseEntity.ok(reservation.get())
+        return if(reservationEntity.isPresent){
+            ResponseEntity.ok(reservationEntity.get())
         }
         //422 reservation not found
         else{
-            ResponseEntity.status(HttpStatus.NOT_FOUND).body("Reservation not found")
+            ResponseEntity.status(HttpStatus.NOT_FOUND).body("ReservationEntity not found")
         }
     }
 

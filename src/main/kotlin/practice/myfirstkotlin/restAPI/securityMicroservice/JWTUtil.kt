@@ -1,4 +1,4 @@
-package practice.myfirstkotlin.restAPI.security
+package practice.myfirstkotlin.restAPI.securityMicroservice
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import java.util.Date

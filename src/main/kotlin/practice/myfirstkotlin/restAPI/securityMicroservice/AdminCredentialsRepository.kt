@@ -1,6 +1,5 @@
-package practice.myfirstkotlin.restAPI.repositories
+package practice.myfirstkotlin.restAPI.securityMicroservice
 import org.springframework.data.jpa.repository.JpaRepository
-import practice.myfirstkotlin.restAPI.entities.AdminCredentials
 import java.util.Optional
 
 interface AdminCredentialsRepository : JpaRepository<AdminCredentials, String>{

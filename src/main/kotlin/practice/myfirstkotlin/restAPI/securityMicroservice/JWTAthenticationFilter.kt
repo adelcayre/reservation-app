@@ -1,4 +1,4 @@
-package practice.myfirstkotlin.restAPI.security
+package practice.myfirstkotlin.restAPI.securityMicroservice
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder

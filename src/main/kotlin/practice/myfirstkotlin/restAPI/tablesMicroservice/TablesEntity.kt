@@ -1,4 +1,4 @@
-package practice.myfirstkotlin.restAPI.entities
+package practice.myfirstkotlin.restAPI.tablesMicroservice
 import jakarta.persistence.*
 
 @Entity

@@ -1,10 +1,8 @@
-package practice.myfirstkotlin.restAPI.services
+package practice.myfirstkotlin.restAPI.reservationService
 
 import org.springframework.stereotype.Service
-import practice.myfirstkotlin.restAPI.entities.Reservation
-import practice.myfirstkotlin.restAPI.entities.Tables
-import practice.myfirstkotlin.restAPI.repositories.ReservationRepository
-import practice.myfirstkotlin.restAPI.repositories.TablesRepository
+import practice.myfirstkotlin.restAPI.tablesMicroservice.Tables
+import practice.myfirstkotlin.restAPI.tablesMicroservice.TablesRepository
 import java.util.*
 
 @Service
@@ -14,12 +12,12 @@ class ReservationService(
 ) {
 
     //reserve a table
-    fun tryReservation(reservation: Reservation) : Long {
-        tablesRepository.findTablesByCapacityIn(listOf(reservation.partySize,reservation.partySize+1)).forEach {
+    fun tryReservation(reservationEntity: ReservationEntity) : Long {
+        tablesRepository.findTablesByCapacityIn(listOf(reservationEntity.partySize,reservationEntity.partySize+1)).forEach {
             //find table not yet reserved
             if(it.resId==null){
-                //save reservation to table and to reservation repository
-                it.setReservation(reservationRepository.save(reservation).id)
+                //save reservationEntity to table and to reservationEntity repository
+                it.setReservation(reservationRepository.save(reservationEntity).id)
                 tablesRepository.save(it)
                 return it.resId?:-1L
             }
@@ -30,7 +28,7 @@ class ReservationService(
     }
 
     //search for reservation by ID
-    fun findReservation(id : Long) : Optional<Reservation> {
+    fun findReservation(id : Long) : Optional<ReservationEntity> {
         return reservationRepository.findById(id)
     }
 
@@ -53,22 +51,22 @@ class ReservationService(
     }
 
     //update reservation
-    fun updateReservation(name : String, id : Long, reservationUpdate: Reservation) : Long {
-        val reservation: Optional<Reservation> = reservationRepository.findByIdAndName(id, name)
+    fun updateReservation(name : String, id : Long, reservationEntityUpdate: ReservationEntity) : Long {
+        val reservationEntity: Optional<ReservationEntity> = reservationRepository.findByIdAndName(id, name)
         //reservation with name and id found
-        if(reservation.isPresent){
+        if(reservationEntity.isPresent){
             val table = tablesRepository.findTablesByResId(id)
 
             //check if current table can accommodate updated party size
-            if(table.capacity==reservationUpdate.partySize || table.capacity == (reservationUpdate.partySize+1)){
+            if(table.capacity==reservationEntityUpdate.partySize || table.capacity == (reservationEntityUpdate.partySize+1)){
                 //update info
-                reservation.get().partySize = reservationUpdate.partySize
-                reservation.get().name = reservationUpdate.name
-                reservationRepository.save(reservation.get())
-                return reservation.get().id
+                reservationEntity.get().partySize = reservationEntityUpdate.partySize
+                reservationEntity.get().name = reservationEntityUpdate.name
+                reservationRepository.save(reservationEntity.get())
+                return reservationEntity.get().id
             }
             //check if another table can take the reservation
-            val newId = tryReservation(reservationUpdate)
+            val newId = tryReservation(reservationEntityUpdate)
             if(newId!=-1L){
                 //remove reservation from previous table
                 table.resId=null
@@ -86,7 +84,7 @@ class ReservationService(
     }
 
     //return all reservations
-    fun findAllReservations(): MutableList<Reservation> {
+    fun findAllReservations(): MutableList<ReservationEntity> {
         return reservationRepository.findAll()
     }
 

@@ -1,13 +1,10 @@
-package practice.myfirstkotlin.restAPI.restControllers
+package practice.myfirstkotlin.restAPI.securityMicroservice
 
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
-import practice.myfirstkotlin.restAPI.entities.AdminCredentials
-import practice.myfirstkotlin.restAPI.entities.ScenarioInitializer
-import practice.myfirstkotlin.restAPI.security.JWTUtil
-import practice.myfirstkotlin.restAPI.services.SecurityService
+import practice.myfirstkotlin.restAPI.ScenarioInitializer
 
 @RestController
 class SecurityController(
