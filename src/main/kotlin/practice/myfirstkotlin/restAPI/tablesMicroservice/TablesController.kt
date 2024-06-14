@@ -18,19 +18,19 @@ class TablesController(tablesInitializer: ScenarioInitializer,
     }
 
     @PostMapping("/tables")
-    fun tryReservation(resId: Long, partySize: Int) : ResponseEntity<Any>  {
+    fun tryReservation(@RequestParam resId: Long,@RequestParam partySize: Int) : ResponseEntity<Any>  {
         return if(tablesService.makeReservation(resId, partySize)) ResponseEntity.ok().build()
         else ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build()
     }
 
     @PutMapping("/tables")
-    fun tryUpdateReservation(resId: Long, partySize: Int) : ResponseEntity<Any>  {
+    fun tryUpdateReservation(@RequestParam resId: Long, @RequestParam partySize: Int) : ResponseEntity<Any>  {
         return if(tablesService.updateReservation(resId, partySize)) ResponseEntity.ok().build()
         else ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build()
     }
 
     @DeleteMapping("/tables")
-    fun deleteReservation(resId: Long) : ResponseEntity<Any>  {
+    fun deleteReservation(@RequestParam resId: Long) : ResponseEntity<Any>  {
         tablesService.deleteReservation(resId)
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build()
     }
